@@ -1,0 +1,130 @@
+@import '../../GeneralStyle/variables.scss';
+
+.wallet {
+
+    .passbook {
+        font-size: 24px;
+        font-weight: bold;
+        font-family: $fontFamily;
+    }
+
+    .wallet-top {
+        background-color: #F3F6FF;
+        border: 1px solid gray;
+        border-radius: 10px;
+        margin-top: 50px;
+        padding: 20px 10px;
+        display: flex;
+        align-items: center;
+
+        .heading {
+            text-align: center;
+            color: gray;
+            font-family: $fontFamily;
+            font-size: larger;
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+
+        .value {
+            text-align: center;
+            font-family: $fontFamily;
+            font-size: larger;
+            font-weight: 600;
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+
+        .border-class {
+            border-right: 1px solid #ddd;
+            border-left: 1px solid #ddd;
+        }
+
+    }
+
+
+
+    .buttons {
+        margin-top: 50px;
+        border: 1px solid gray;
+        background-color: #F8F8F8;
+        width: fit-content;
+        border-radius: 100px;
+
+        .toggle {
+            border-radius: 100px;
+            border: none;
+            background-color: transparent;
+            padding: 7px 20px;
+            font-size: larger;
+            cursor: pointer;
+        }
+
+        .toggle-active {
+            background-color: #0094dc;
+            color: #fff;
+            font-weight: 600;
+        }
+    }
+
+    .ready-to-trade {
+        margin-top: 50px;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .trade-start {
+                display: flex;
+                align-items: center;
+                background-color: #F8F8F8;
+                border-radius: 10px;
+                gap: 20px;
+                padding: 0px 10px;
+            }
+        }
+
+        .wallet-right-side {
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            border-radius: 10px;
+            height: 100%;
+            padding: 20px;
+            
+            .credits{
+                font-family: $fontFamily;
+                color: gray !important;
+            }
+            .ant-input-affix-wrapper{
+                border-top: none !important;
+                border-radius: 0px !important;
+                border-left: none !important;
+                border-right: none !important;
+                box-shadow: none !important;
+            }
+            .wellate-buttons {
+                display: flex;
+                justify-content: space-between;
+                gap: 20px;
+                .deposit {
+                    background-color: #F3F3F3;
+                    padding: 15px 40px;
+                    border: none;
+                    border-radius: 100px;
+                    cursor: pointer;
+                    font-size: larger;
+
+                }
+
+                .activeButton{
+                    background-color: #0094dc;
+                    color: #fff;
+                    font-size: larger;
+                }
+            }
+        }
+    }
+}

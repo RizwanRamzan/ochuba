@@ -1,0 +1,86 @@
+@import '../../GeneralStyle/variables.scss';
+
+.portfolio {
+
+
+    .portfolio-top {
+        background-color: #F3F6FF;
+        border: 1px solid gray;
+        border-radius: 10px;
+        margin-top: 50px;
+        padding: 20px 0px;
+        display: flex;
+        align-items: center;
+
+        .heading {
+            text-align: center;
+            color: gray;
+            font-family: $fontFamily;
+            font-size: larger;
+            margin-top: 5px;
+            margin-bottom: 0px;
+        }
+
+        .value {
+            text-align: center;
+            font-family: $fontFamily;
+            font-size: larger;
+            font-weight: 600;
+            margin-top: 5px;
+            margin-bottom: 0px;
+
+        }
+    }
+
+    .buttons {
+        margin-top: 50px;
+        border: 1px solid gray;
+        background-color: #F8F8F8;
+        width: fit-content;
+        border-radius: 100px;
+
+        .toggle {
+            border-radius: 100px;
+            border: none;
+            background-color: transparent;
+            padding: 7px 20px;
+            font-size: larger;
+            cursor: pointer;
+        }
+
+        .toggle-active{
+            background-color: #0094dc;
+            color: #fff;
+            font-weight: 600;
+        }
+    }
+
+    .ready-to-trade{
+        margin-top: 50px;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        .left-side{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .trade-start{
+                display: flex;
+                align-items: center;
+                background-color: #F8F8F8;
+                border-radius: 10px;
+                gap: 20px;
+                padding: 0px 10px;
+            }
+        }
+        .right-side{
+            border: 2px solid #F4F4F4;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+    }
+
+}

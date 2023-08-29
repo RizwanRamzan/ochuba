@@ -1,0 +1,151 @@
+@import '../../GeneralStyle/variables.scss';
+
+.home {
+    display: flex;
+    justify-content: center;
+
+    .home-box {
+       
+        .learn {
+            height: 70px;
+            background-color: #F4F4F4;
+            text-align: center;
+            color: #1994C8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            margin-top: 50px;
+            border-radius: 10px;
+            font-size: 20px;
+
+            a {
+                text-decoration: underline;
+            }
+        }
+
+        .ant-select-selector {
+            height: 60px !important;
+            border: 1px solid #D4CFCC !important;
+            display: flex !important;
+            align-items: center !important;
+            border-radius: 100px !important;
+            width: 100% !important;
+            background-color: #F4F4F4;
+            box-shadow: none;
+        }
+
+        .title-tabs {
+            display: flex;
+            gap: 30px;
+
+            @media screen and (max-width:900px) {
+                width: 100%;
+                overflow-x: scroll;
+            }
+
+            // overflow-x: scroll;
+            .title-tab {
+                display: flex;
+                justify-content: center;
+                padding: 10px 20px;
+                background-color: #F4F4F4;
+                border-radius: 100px;
+                gap: 15px;
+                border: 1px solid #F4F4F4;
+                cursor: pointer;
+                width: fit-content;
+
+
+                &:hover {
+                    background-color: #fff;
+                    border: 1px solid #000000;
+
+
+                }
+
+                .title {
+                    margin: 0px;
+                    font-size: 16px;
+                    font-family: $fontFamily;
+                }
+
+                .title1 {
+                    margin: 0px;
+                    font-size: 16px;
+                    font-family: $fontFamily;
+
+                    @media screen and (max-width:900px) {
+                        width: 200px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .card {
+            padding: 0px !important;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            img {
+                width: 70px;
+            }
+
+            .title-text {
+                font-weight: 600;
+                font-family: $fontFamily;
+            }
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+
+            .card-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                img {
+                    width: 20px;
+                }
+
+                .left-text {
+                    margin: 0%;
+                    font-weight: 500;
+                    padding-top: 2px;
+                }
+            }
+
+            .card-right {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .right-text1 {
+                    color: #0A5881;
+                    font-weight: 700;
+                    margin: 0%;
+                }
+
+                .right-text2 {
+                    color: #E87452;
+                    font-weight: 700;
+                    margin: 0%;
+                }
+            }
+        }
+
+    }
+}
+
+.activetab {
+    background-color: #000000 !important;
+    color: #fff;
+
+    svg path {
+        fill: #fff;
+    }
+}
