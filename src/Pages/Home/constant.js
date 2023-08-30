@@ -15,7 +15,7 @@ export const Title = [
                 sub_title: "Afghanistan vs Pakistan"
             },
             {
-                sub_title: "-Caribbean Premier"
+                sub_title: "Caribbean Premier"
             },
         ]
     },
@@ -171,3 +171,9 @@ export const CardData = [
         no: "95.00"
     },
 ]
+
+
+
+
+
+

@@ -1,8 +1,8 @@
-import { Button, Col, Empty, Input, Modal, Row } from 'antd'
-import React, { useState } from 'react'
+import { Button, Card, Col, Drawer, Empty, Form, Input, Modal, Row } from 'antd'
+import React, { useEffect, useState } from 'react'
 import './wallet.scss'
-import { Trading } from '../../assets'
 import { useNavigate } from 'react-router-dom'
+import { DefaultNumber } from './constant'
 
 const Wallet = () => {
 
@@ -14,7 +14,19 @@ const Wallet = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [withdrawal, setWithdrawal] = useState("deposit");
-    const [dollor,setDollor] = useState("")
+    const [dollor, setDollor] = useState("")
+    let [number, setNumber] = useState("")
+    const [activeBtn, setActiveBtn] = useState("")
+
+    const [open, setOpen] = useState(false);
+
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
 
 
 
@@ -36,11 +48,20 @@ const Wallet = () => {
 
     };
 
-    const valueToDoller=(e)=>{
-        setDollor((e/=82.62).toFixed(2))
+    const valueToDoller = (e) => {
+        setDollor((e /= 82.62).toFixed(2))
+
     }
 
     const navigate = useNavigate()
+
+    const [form] = Form.useForm()
+
+    useEffect(() => {
+        form?.setFieldValue({
+            amout: number
+        })
+    }, [number])
 
     return (
         <div className='wallet'>
@@ -65,30 +86,59 @@ const Wallet = () => {
             </Row>
             <Row>
                 <Col span={24}>
-                    <p className='passbook'>Passbook</p>
+                    <p className='passbook'>My Transactions</p>
                 </Col>
             </Row>
-            <Row className='ready-to-trade'>
+            <Row gutter={20} className='ready-to-trade'>
                 <Col span={17}>
                     <div className='left-side'>
-                        <img src={Trading} />
-                        <p>You are ready to trade. Start Now!</p>
-                        <div className='trade-start' >
-                            <p>Discover various markets to trade</p>
-                            <Button onClick={() => navigate("/market")} type='primary' >Start Now</Button>
-                        </div>
+                        {[1, 2, 3].map((item, index) => <div onClick={() => showDrawer()} className='wellate-card'>
+                            <div className='wellate-left'>
+                                <p className='first-text'>Signup Bonus Added</p>
+                                <p className='second-text' >Signup Bonus Added</p>
+                            </div>
+                            <p className='right-text'>+10</p>
+                        </div>)}
                     </div>
                 </Col>
                 <Col style={{ height: "100%" }} span={7}>
                     <div className='wallet-right-side'>
                         <div className='wellate-buttons'>
-                            <button onClick={()=>setWithdrawal("deposit")} className={withdrawal == "deposit" ? 'activeButton deposit' : "deposit"}>Deposit</button>
-                            <button onClick={()=>setWithdrawal("withdraw")} className={withdrawal == "withdraw" ? 'activeButton deposit' : "deposit"}>Withdraw</button>
+                            <button onClick={() => setWithdrawal("deposit")} className={withdrawal == "deposit" ? 'activeButton deposit' : "deposit"}>Deposit</button>
+                            <button onClick={() => setWithdrawal("withdraw")} className={withdrawal == "withdraw" ? 'activeButton deposit' : "deposit"}>Withdraw</button>
                         </div>
                         <p className='credits' >Credits to be added (1$ ≈ 82.62 credits)</p>
-                        <Input onChange={(e)=>valueToDoller(e.target.value)} min={0} suffix={dollor && <p style={{color:"#0093DD",margin:"0px",}}>= {(dollor)} USDT*</p>} className='ant-input-affix-wrapper' type='number' placeholder='Enter Amout' />
-                        <div>
-                            
+                        <Form form={form}>
+                            <Form.Item name="amout">
+                                <Input onChange={(e) => valueToDoller(e.target.value)} min={0} suffix={dollor && <p style={{ color: "#0093DD", margin: "0px", }}>= {(dollor)} USDT*</p>} className='ant-input-affix-wrapper' type='number' placeholder='Enter Amout' />
+                            </Form.Item>
+                        </Form>
+                        <div className='wellate-numbers'>
+                            {DefaultNumber?.map((item, index) =>
+                                <p onClick={() => {
+                                    setNumber(item?.number)
+                                }} className={number == item?.number ? 'wellate-default active-number' : "wellate-default"} key={index}>{item?.number}</p>
+                            )
+                            }
+                        </div>
+
+
+                        <div className='selet-network'>
+                            <p>Select Network Type</p>
+                            <div className='selet-network-button'>
+                                {["BINANCE PAY", "TRC20", "ERC20"]?.map((item, index) =>
+                                    <button onClick={() => setActiveBtn(item)} className={activeBtn == item && "active-button"} key={index} >{item}</button>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className='text-area'>
+                            <p className='dec'>All your deposits will be processed in USDT only. Actual rates may vary during the time of transaction.</p>
+                            <p className='dec'>We support ERC20 & TRC20 networks. For details please <a>refer this .</a></p>
+                        </div>
+
+                        <div className='proceed'>
+                            <button>Proceed</button>
                         </div>
                     </div>
                 </Col>
@@ -141,6 +191,39 @@ const Wallet = () => {
 
                 </Row>
             </Modal>
+
+            <Drawer title="Signup Bonus Added" placement="right" onClose={onClose} open={open}>
+                <Row className='drawer'>
+                    <Col span={24}>
+                        <div className='transactions-profile'>
+                            <p className='profile'>+</p>
+                            <p className='profile_name'>Signup Bonus Added</p>
+                            <p className='profile_point' >10</p>
+                        </div>
+                    </Col>
+                    <Col span={24}>
+                        <p className='transactions_details'>Transactions Details</p>
+                    </Col>
+                    <Col span={12}>
+                        <p className='left' >Amount</p>
+                    </Col>
+                    <Col span={12}>
+                        <p className='right' >10</p>
+                    </Col>
+                    <Col span={12}>
+                        <p className='left' >Transaction ID</p>
+                    </Col>
+                    <Col span={12}>
+                        <p className='right' >loram</p>
+                    </Col>
+                    <Col span={12}>
+                        <p className='left' >Date</p>
+                    </Col>
+                    <Col span={12}>
+                        <p className='right' >loram</p>
+                    </Col>
+                </Row>
+            </Drawer>
         </div>
     )
 }

@@ -6,6 +6,7 @@
         font-size: 24px;
         font-weight: bold;
         font-family: $fontFamily;
+        margin-bottom: 3 px;
     }
 
     .wallet-top {
@@ -68,47 +69,150 @@
     }
 
     .ready-to-trade {
-        margin-top: 50px;
-        height: 80vh;
         display: flex;
-        align-items: center;
 
-        .left-side {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .proceed {
+            margin-top: 50px;
 
-            .trade-start {
-                display: flex;
-                align-items: center;
-                background-color: #F8F8F8;
+            button {
+                width: 100%;
+                background-color: black;
+                height: 50px;
+                color: #fff;
+                font-weight: 600;
                 border-radius: 10px;
-                gap: 20px;
-                padding: 0px 10px;
+                cursor: pointer;
             }
         }
 
+        .left-side {
+            height: 100%;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+
+            .wellate-card {
+                width: 100%;
+                height: fit-content;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.13) 0px 3px 6px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 30px;
+                cursor: pointer;
+
+
+                .first-text {
+                    font-weight: 600;
+                    font-family: $fontFamily;
+                    margin: 0px;
+
+                }
+
+                .second-text {
+                    font-size: 12px;
+                    color: gray;
+                    margin: 0px;
+                }
+
+                .right-text {
+                    color: #00AA51;
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+            }
+
+        }
+
         .wallet-right-side {
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.13) 0px 3px 6px;
             border-radius: 10px;
             height: 100%;
             padding: 20px;
-            
-            .credits{
+
+            .text-area {
+
+                margin-top: 40px;
+
+                .dec {
+                    font-size: 13px;
+                    font-family: $fontFamily;
+                    color: gray;
+                    padding: 10px 10px;
+                    background-color: #F5F7F9;
+                    border-radius: 10px;
+                }
+
+            }
+
+            .selet-network {
+                p {
+                    font-family: $fontFamily;
+                    color: gray;
+                    font-size: 13px;
+                }
+
+                .selet-network-button {
+                    width: 100%;
+                    display: flex;
+                    flex-flow: wrap;
+                    justify-content: space-between;
+                    gap: 10px;
+
+                    button {
+                        border: 1px solid gray;
+                        width: 48%;
+                        height: 40px;
+                        border-radius: 10px;
+                        font-family: $fontFamily;
+                        cursor: pointer;
+                    }
+
+                    .active-button {
+                        background-color: black;
+                        color: #fff;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .wellate-numbers {
+                display: flex;
+                justify-content: space-between;
+
+                .wellate-default {
+                    padding: 7px 18px;
+                    border: 1px solid gray;
+                    border-radius: 100px;
+                    cursor: pointer;
+                    font-family: $fontFamily;
+                }
+
+                .active-number {
+                    background-color: black;
+                    color: #ffff;
+                    font-weight: 600;
+                }
+            }
+
+            .credits {
                 font-family: $fontFamily;
                 color: gray !important;
             }
-            .ant-input-affix-wrapper{
-                border-top: none !important;
-                border-radius: 0px !important;
-                border-left: none !important;
-                border-right: none !important;
+
+            .ant-input-affix-wrapper {
                 box-shadow: none !important;
+                border: 1px solid gray !important;
+                height: 40px !important;
             }
+
             .wellate-buttons {
                 display: flex;
                 justify-content: space-between;
                 gap: 20px;
+
                 .deposit {
                     background-color: #F3F3F3;
                     padding: 15px 40px;
@@ -119,7 +223,7 @@
 
                 }
 
-                .activeButton{
+                .activeButton {
                     background-color: #0094dc;
                     color: #fff;
                     font-size: larger;
@@ -127,4 +231,52 @@
             }
         }
     }
+}
+
+.drawer {
+
+    .transactions-profile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+
+        .profile {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #cfd8cc;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: xx-large;
+        }
+
+        .profile_name {
+            margin: 0px;
+            font-family: $fontFamily;
+            font-size: medium;
+            font-weight: 400;
+        }
+
+        .profile_point {
+            margin: 0px;
+            font-family: $fontFamily;
+            font-size: large;
+            font-weight: 600;
+        }
+    }
+
+    .transactions_details{
+        font-size: x-large;
+        font-weight: 600;
+    }
+
+   
+    .right{
+        float: right;
+    }
+
 }

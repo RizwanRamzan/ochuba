@@ -20,7 +20,7 @@ const Header = () => {
             <div className='header-box'>
                 <Row >
                     <Col span={mobileResponsive ? 24 : 12} className='image-box'>
-                        <img src={Logo} />
+                        <img onClick={()=> navigate("/market")} style={{cursor:"pointer"}} src={Logo} />
                     </Col>
                     <Col span={mobileResponsive ? 24 : 12}>
                         <div className='header-tab-box'>
@@ -36,10 +36,10 @@ const Header = () => {
                                 <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
                                 <p className='text'>Wallet</p>
                             </div>
-                            <div className='header-tab'>
+                            {/* <div className='header-tab'>
                                 <img src={Commiunty} />
                                 <p className='text'>Markets</p>
-                            </div>
+                            </div> */}
                             <div className='header-tab'>
                                 <img src={Profile} />
                                 <p className='text'>Markets</p>

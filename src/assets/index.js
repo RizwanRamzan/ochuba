@@ -14,6 +14,7 @@ export { default as news } from "./icons/news.svg"
 export { default as politics } from "./icons/politics.svg"
 export { default as sports } from "./icons/sports.svg"
 export { default as Trading } from "./icons/trading.png"
+export { default as Filter } from "./icons/icons8-filter-48.png"
 
 
 // BEt

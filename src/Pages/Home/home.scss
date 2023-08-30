@@ -5,9 +5,19 @@
     justify-content: center;
 
     .home-box {
-       
+
+        .filter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #F4F4F4;
+            border-radius: 100px !important;
+            cursor: pointer;
+            height: 40px;
+        }
+
         .learn {
-            height: 70px;
+            height: 50px;
             background-color: #F4F4F4;
             text-align: center;
             color: #1994C8;
@@ -17,7 +27,8 @@
             font-weight: 700;
             margin-top: 50px;
             border-radius: 10px;
-            font-size: 20px;
+            font-size: 18px;
+            font-family: $fontFamily;
 
             a {
                 text-decoration: underline;
@@ -25,19 +36,21 @@
         }
 
         .ant-select-selector {
-            height: 60px !important;
+            height: 40px !important;
             border: 1px solid #D4CFCC !important;
             display: flex !important;
             align-items: center !important;
+            justify-content: center !important;
             border-radius: 100px !important;
-            width: 100% !important;
+            width: fit-content !important;
             background-color: #F4F4F4;
-            box-shadow: none;
+            box-shadow: none !important;
+
         }
 
         .title-tabs {
             display: flex;
-            gap: 30px;
+            gap: 10px;
 
             @media screen and (max-width:900px) {
                 width: 100%;
@@ -48,12 +61,15 @@
             .title-tab {
                 display: flex;
                 justify-content: center;
-                padding: 10px 20px;
+                align-items: center;
+                height: 40px;
+                padding: 0px 10px;
                 background-color: #F4F4F4;
                 border-radius: 100px;
-                gap: 15px;
+                gap: 10px;
                 border: 1px solid #F4F4F4;
                 cursor: pointer;
+                font-family: $fontFamily;
                 width: fit-content;
 
 
@@ -66,13 +82,13 @@
 
                 .title {
                     margin: 0px;
-                    font-size: 16px;
+                    font-size: 14px;
                     font-family: $fontFamily;
                 }
 
                 .title1 {
                     margin: 0px;
-                    font-size: 16px;
+                    font-size: 14px;
                     font-family: $fontFamily;
 
                     @media screen and (max-width:900px) {
@@ -86,22 +102,25 @@
         .card {
             padding: 0px !important;
             display: flex;
-            align-items: center;
+            // align-items: center;
             gap: 20px;
 
             img {
-                width: 70px;
+                width: 50px;
+                height: 50px;
             }
 
             .title-text {
                 font-weight: 600;
                 font-family: $fontFamily;
+                margin: 0px;
             }
         }
 
         .card-bottom {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+            margin-top: 20px;
 
             .card-left {
                 display: flex;
@@ -119,23 +138,34 @@
                 }
             }
 
-            .card-right {
-                display: flex;
-                align-items: center;
-                gap: 10px;
+            // .card-right {
+            //     display: flex;
+            //     align-items: center;
+            //     gap: 10px;
 
-                .right-text1 {
-                    color: #0A5881;
-                    font-weight: 700;
-                    margin: 0%;
-                }
+            .right-text1 {
+                color: #6F5BCB;
+                font-weight: 500;
+                margin: 0%;
+                background-color: #EDEBF8;
+                padding: 7px 20px;
+                border-radius: 100px;
+                font-family: $fontFamily;
 
-                .right-text2 {
-                    color: #E87452;
-                    font-weight: 700;
-                    margin: 0%;
-                }
             }
+
+            .right-text2 {
+                color: #D762AE;
+                background-color: #FAE9F4;
+                font-weight: 500;
+                margin: 0%;
+                padding: 7px 20px;
+                border-radius: 100px;
+                font-family: $fontFamily;
+  
+            }
+
+            // }
         }
 
     }

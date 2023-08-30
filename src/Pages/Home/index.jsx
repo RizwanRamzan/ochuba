@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import './home.scss'
-import { Card, Col, Row, Select } from 'antd'
+import { Card, Col, Dropdown, Row, Select } from 'antd'
 import { CardData, Title } from './constant'
 import { ReactSVG } from 'react-svg'
-import { Fiverr, Ranking1 } from '../../assets'
+import { Filter, Fiverr, Ranking1 } from '../../assets'
 import { useMediaQuery } from 'react-responsive'
 import LearnTrade from '../../Component/LearnTrading'
+
 
 const Home = () => {
 
@@ -37,6 +38,35 @@ const Home = () => {
         query: '(max-width: 900px)'
     })
 
+    
+
+    const items = [
+        {
+          key: '1',
+          label: (
+            <a target="_blank" rel="noopener noreferrer">
+              Closing Soon
+            </a>
+          ),
+        },
+        {
+          key: '2',
+          label: (
+            <a target="_blank" rel="noopener noreferrer">
+              New Market
+            </a>
+          ),
+        },
+        {
+          key: '3',
+          label: (
+            <a target="_blank" rel="noopener noreferrer">
+              Total Volume
+            </a>
+          ),
+        },
+      ];
+
     return (
         <div className='home'>
 
@@ -51,26 +81,38 @@ const Home = () => {
                             How to trade? <a onClick={() => showModal()}> Learn More</a>
                         </div>
                     </Col>
-                    <Col span={mobileResponsive ? 24 : 5} style={{ marginTop: "40px" }}>
-                        <Select defaultValue="Comming Soon" placeholder="Comming Soon" className='ant-select-selector'>
+                    <Col span={mobileResponsive ? 24 : 2} style={{ marginTop: "40px" }}>
+                        <Dropdown
+                            menu={{ items }}
+                            placement="bottomRight"
+                            trigger={['click']}
+                        >
+                            <div className='filter'>
+                                <img width={25} height="auto" src={Filter} />
+                            </div>
+                        </Dropdown>
+                        {/* <Select suffixIcon={} className='ant-select-selector'>
+                            <Select.Option value="Closing Soon">
+                                Closing Soon
+                            </Select.Option>
                             <Select.Option value="New Market">
                                 New Market
                             </Select.Option>
                             <Select.Option value="Total Volums">
                                 Total Volums
                             </Select.Option>
-                        </Select>
+                        </Select> */}
                     </Col>
 
 
-                    <Col span={mobileResponsive ? 24 : 19} style={{ marginTop: "50px" }}>
+                    <Col span={mobileResponsive ? 24 : 22} style={{ marginTop: "40px" }}>
                         <div className='title-tabs'>
                             {Title?.map((item, index) =>
                                 <div onClick={() => {
                                     setTabs({ name: item?.name, index: index })
                                     setSubTabs("")
                                 }} key={index} className={`title-tab ${tabs?.name == item?.name && "activetab"}`}>
-                                    <ReactSVG style={{ marginTop: "5px"}} src={item?.icons} />
+                                    <ReactSVG style={{ marginTop: "5px" }} src={item?.icons} />
                                     <p className='title'>{item?.name}</p>
                                 </div>
                             )}
@@ -94,20 +136,20 @@ const Home = () => {
                 <Row style={{ marginTop: "50px" }} gutter={[20, 20]}>
                     {CardData?.map((item) =>
                         <Col span={mobileResponsive ? 24 : 8}>
-                            <Card style={{ cursor: "pointer" }}>
+                            <Card style={{ cursor: "pointer",borderColor:"gray" }}>
                                 <div className='card'>
-                                    <img src={item?.image} alt="item?.image" />
                                     <p className='title-text'>{item?.title}</p>
+                                    <img src={item?.image} alt="item?.image" />
                                 </div>
                                 <div className='card-bottom'>
-                                    <div className='card-left'>
+                                    {/* <div className='card-left'>
                                         <img src={Ranking1} />
                                         <p className='left-text'>{item?.trade}</p>
-                                    </div>
-                                    <div className='card-right'>
+                                    </div> */}
+                                    {/* <div className='card-right'> */}
                                         <p className='right-text1'>Yes {item?.yes}</p>
                                         <p className='right-text2'>No {item?.no}</p>
-                                    </div>
+                                    {/* </div> */}
                                 </div>
                             </Card>
                         </Col>
