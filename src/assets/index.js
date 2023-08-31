@@ -3,6 +3,7 @@ export { default as Ranking } from "./market1.svg"
 export { default as Ranking1 } from "./ranking.svg"
 export { default as Commiunty } from "./commiunty.svg"
 export { default as Profile } from "./download.png"
+export { default as Profileeee } from "./download.png"
 
 
 // Icons
