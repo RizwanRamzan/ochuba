@@ -19,9 +19,9 @@ const Header = () => {
         {
             key: '1',
             label: (
-            <a onClick={()=>navigate("/profile")}>
-              Profile
-            </a>
+                <a onClick={() => navigate("/profile")}>
+                    Profile
+                </a>
             ),
         },
         {
@@ -52,7 +52,7 @@ const Header = () => {
                     </Col>
                     <Col span={mobileResponsive ? 24 : 12}>
                         <div className='header-tab-box'>
-                            <div onClick={() => navigate("/market")} className={windowLoaction.includes("/market") ? 'header-tab active-text' : "header-tab"}>
+                            <div onClick={() => navigate("/market")} className={windowLoaction.includes("/market") || windowLoaction.includes("/trading-chart") ? 'header-tab active-text' : "header-tab"}>
                                 <img src={Ranking} />
                                 <p className='text'>Markets</p>
                             </div>
@@ -73,7 +73,7 @@ const Header = () => {
                                 placement='bottomLeft'
                                 trigger={['click']}
                             >
-                                <div  className={windowLoaction.includes("/profile") ? 'header-tab active-text' : "header-tab"}>
+                                <div className={windowLoaction.includes("/profile") ? 'header-tab active-text' : "header-tab"}>
                                     <img src={Profile} />
                                     <p className='text'>Profile</p>
                                 </div>

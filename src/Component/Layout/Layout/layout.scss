@@ -1,8 +1,9 @@
-.layout{
+.layout {
     display: flex;
     justify-content: center;
+    padding-bottom: 50px;
 
-    .layout-box{
+    .layout-box {
         width: 80%;
 
         @media screen and (max-width:900px) {

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import './home.scss'
-import { Card, Col, Dropdown, Row, Select } from 'antd'
+import { Card, Carousel, Col, Dropdown, Row, Select } from 'antd'
 import { CardData, Title } from './constant'
 import { ReactSVG } from 'react-svg'
-import { Filter, Fiverr, Ranking1 } from '../../assets'
+import { Filter, image1, image2, image3, image4, image5 } from '../../assets'
 import { useMediaQuery } from 'react-responsive'
 import LearnTrade from '../../Component/LearnTrading'
+import { useNavigate } from 'react-router-dom'
+
+
 
 
 const Home = () => {
@@ -13,6 +16,8 @@ const Home = () => {
     const [tabs, setTabs] = useState({ name: "Sports", index: 0 })
     const [subTabs, setSubTabs] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const navigate = useNavigate()
 
 
 
@@ -38,34 +43,34 @@ const Home = () => {
         query: '(max-width: 900px)'
     })
 
-    
+
 
     const items = [
         {
-          key: '1',
-          label: (
-            <a target="_blank" rel="noopener noreferrer">
-              Closing Soon
-            </a>
-          ),
+            key: '1',
+            label: (
+                <a target="_blank" rel="noopener noreferrer">
+                    Closing Soon
+                </a>
+            ),
         },
         {
-          key: '2',
-          label: (
-            <a target="_blank" rel="noopener noreferrer">
-              New Market
-            </a>
-          ),
+            key: '2',
+            label: (
+                <a target="_blank" rel="noopener noreferrer">
+                    New Market
+                </a>
+            ),
         },
         {
-          key: '3',
-          label: (
-            <a target="_blank" rel="noopener noreferrer">
-              Total Volume
-            </a>
-          ),
+            key: '3',
+            label: (
+                <a target="_blank" rel="noopener noreferrer">
+                    Total Volume
+                </a>
+            ),
         },
-      ];
+    ];
 
     return (
         <div className='home'>
@@ -74,14 +79,22 @@ const Home = () => {
 
                 <Row gutter={30} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Col span={24} style={{ marginTop: "50px" }} >
-                        <img src={Fiverr} style={{ borderRadius: "10px", border: "1px solid gray" }} />
+                        <Carousel   style={{width:"1250px",height:"200px"}} slidesToShow={3} dots={true} autoplay>
+
+                            <div style={{width:"100%"}}><img style={{borderRadius:"10px"}} width={"100%"} src={image1} /></div>
+                            <div style={{width:"100%"}}><img style={{borderRadius:"10px"}} width={"100%"} src={image2} /></div>
+                            <div style={{width:"100%"}}><img style={{borderRadius:"10px"}} width={"100%"} src={image3} /></div>
+                            <div style={{width:"100%"}}><img style={{borderRadius:"10px"}} width={"100%"} src={image4} /></div>
+                            <div style={{width:"100%"}}><img style={{borderRadius:"10px"}} width={"100%"} src={image5} /></div>
+
+                        </Carousel>
                     </Col>
-                    <Col span={24}>
+                    {/* <Col span={24}>
                         <div className='learn'>
                             How to trade? <a onClick={() => showModal()}> Learn More</a>
                         </div>
-                    </Col>
-                    <Col span={mobileResponsive ? 24 : 2} style={{ marginTop: "40px" }}>
+                    </Col> */}
+                    <Col span={mobileResponsive ? 24 : 2}>
                         <Dropdown
                             menu={{ items }}
                             placement="bottomRight"
@@ -105,7 +118,7 @@ const Home = () => {
                     </Col>
 
 
-                    <Col span={mobileResponsive ? 24 : 22} style={{ marginTop: "40px" }}>
+                    <Col span={mobileResponsive ? 24 : 22} >
                         <div className='title-tabs'>
                             {Title?.map((item, index) =>
                                 <div onClick={() => {
@@ -136,7 +149,7 @@ const Home = () => {
                 <Row style={{ marginTop: "50px" }} gutter={[20, 20]}>
                     {CardData?.map((item) =>
                         <Col span={mobileResponsive ? 24 : 8}>
-                            <Card style={{ cursor: "pointer",borderColor:"gray" }}>
+                            <Card onClick={() => navigate('/trading-chart')} style={{ cursor: "pointer", borderColor: "gray" }}>
                                 <div className='card'>
                                     <p className='title-text'>{item?.title}</p>
                                     <img src={item?.image} alt="item?.image" />
@@ -147,8 +160,8 @@ const Home = () => {
                                         <p className='left-text'>{item?.trade}</p>
                                     </div> */}
                                     {/* <div className='card-right'> */}
-                                        <p className='right-text1'>Yes {item?.yes}</p>
-                                        <p className='right-text2'>No {item?.no}</p>
+                                    <p className='right-text1'>Yes {item?.yes}</p>
+                                    <p className='right-text2'>No {item?.no}</p>
                                     {/* </div> */}
                                 </div>
                             </Card>

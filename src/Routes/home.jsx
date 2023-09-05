@@ -3,6 +3,7 @@ import Home from "../Pages/Home";
 import Protfolio from "../Pages/Portfolio";
 import Wallet from "../Pages/Wallet";
 import Profile from "../Pages/Profile";
+import TradingScreen from "../Component/Chart";
 
 const HomeAuthRoutes = () => {
 
@@ -14,6 +15,7 @@ const HomeAuthRoutes = () => {
             <Route path="/portfolio" element={<Protfolio />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/trading-chart" element={<TradingScreen />} />
         </Routes>
 
     )

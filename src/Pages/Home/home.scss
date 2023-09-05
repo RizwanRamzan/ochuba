@@ -179,3 +179,8 @@
         fill: #fff;
     }
 }
+
+.ant-carousel .slick-slider .slick-track{
+    display: flex !important;
+    gap: 10px !important;
+}
