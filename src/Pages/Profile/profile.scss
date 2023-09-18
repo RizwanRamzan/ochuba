@@ -6,11 +6,26 @@
     gap: 30px;
     margin-top: 50px;
 
+    @media screen and (max-width:900px) {
+        margin-top: 20px;
+        flex-direction: column-reverse;
+    }
+
     .left-side {
         width: 70%;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.13) 0px 3px 6px;
-        padding: 20px;
         border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        padding: 20px 0px;
+
+        @media screen and (max-width:900px) {
+            width: 100%;
+        }
+
+        .left-side-inner {
+            width: 90%;
+        }
 
         .ant-input-affix-wrapper {
             box-shadow: none !important;
@@ -34,7 +49,17 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.13) 0px 3px 6px;
         border-radius: 10px;
         height: fit-content;
-        padding: 30px 10px;
+        display: flex;
+        justify-content: center;
+        padding: 20px 0px;
+
+        @media screen and (max-width:900px) {
+            width: 100%;
+        }
+
+        .right-side-inner {
+            width: 90%;
+        }
 
 
         .profile-image {
@@ -49,9 +74,12 @@
                 border: 2px solid gray;
             }
 
-            .profile-details{
+            .profile-details {
                 text-align: center;
-                
+
+                .profile-name{
+                    text-align: center;
+                }
             }
         }
 

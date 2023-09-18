@@ -4,6 +4,7 @@ import { Col, Divider, Dropdown, Row } from 'antd'
 import { Commiunty, Logo, Profile, Ranking } from '../../../assets'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
 
@@ -15,11 +16,24 @@ const Header = () => {
 
     const windowLoaction = window.location.pathname
 
+
+    const token = localStorage.getItem("tradingToken")
+
+    const navigateRouteHandler = (path) => {
+        if (token) {
+            navigate(path)
+        }
+        else {
+            navigate('/login')
+        }
+    }
+
+
     const items = [
         {
             key: '1',
             label: (
-                <a onClick={() => navigate("/profile")}>
+                <a onClick={() => navigateRouteHandler("/profile")}>
                     Profile
                 </a>
             ),
@@ -35,7 +49,10 @@ const Header = () => {
         {
             key: '3',
             label: (
-                <a target="_blank" rel="noopener noreferrer">
+                <a onClick={() => {
+                    localStorage.clear()
+                    window.location.href = "/login"
+                }}>
                     Logout
                 </a>
             ),
@@ -43,43 +60,67 @@ const Header = () => {
     ];
 
 
+
     return (
         <div className='header'>
             <div className='header-box'>
-                <Row >
-                    <Col span={mobileResponsive ? 24 : 12} className='image-box'>
-                        <img onClick={() => navigate("/market")} style={{ cursor: "pointer" }} src={Logo} />
+                <Row>
+                    <Col span={12} className='image-box'>
+                        <img onClick={() => navigateRouteHandler("/market")} style={{ cursor: "pointer" }} src={Logo} />
                     </Col>
-                    <Col span={mobileResponsive ? 24 : 12}>
-                        <div className='header-tab-box'>
-                            <div onClick={() => navigate("/market")} className={windowLoaction.includes("/market") || windowLoaction.includes("/trading-chart") ? 'header-tab active-text' : "header-tab"}>
-                                <img src={Ranking} />
-                                <p className='text'>Markets</p>
+                    {mobileResponsive && !                                                                          token &&
+                        <Col span={12}>
+                            <div style={{ display: "flex", justifyContent: "end", height: "100%", alignItems: "center" }}>
+                                <button onClick={() => {
+                                    localStorage.clear()
+                                    window.location.href = "/login"
+                                }} className='register'>Register</button>
                             </div>
-                            <div onClick={() => navigate("/portfolio")} className={windowLoaction.includes("/portfolio") ? 'header-tab active-text' : "header-tab"}>
-                                <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
-                                <p className='text'>Portfolio</p>
-                            </div>
-                            <div onClick={() => navigate("/wallet")} className={windowLoaction.includes("/wallet") ? 'header-tab active-text' : "header-tab"}>
-                                <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
-                                <p className='text'>Wallet</p>
-                            </div>
-                            {/* <div className='header-tab'>
+                        </Col>
+                    }
+                    {!mobileResponsive &&
+                        <Col span={mobileResponsive ? 24 : 12}>
+                            <div className='header-tab-box'>
+                                <div onClick={() => navigateRouteHandler("/market")} className={windowLoaction.includes("/market") || windowLoaction.includes("/trading-chart") ? 'header-tab active-text' : "header-tab"}>
+                                    <img src={Ranking} />
+                                    <p className='text'>Markets</p>
+                                </div>
+                                <div onClick={() => navigateRouteHandler("/portfolio")} className={windowLoaction.includes("/portfolio") ? 'header-tab active-text' : "header-tab"}>
+                                    <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
+                                    <p className='text'>Portfolio</p>
+                                </div>
+                                <div onClick={() => navigateRouteHandler("/wallet")} className={windowLoaction.includes("/wallet") ? 'header-tab active-text' : "header-tab"}>
+                                    <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
+                                    <p className='text'>Wallet</p>
+                                </div>
+                                {/* <div className='header-tab'>
                                 <img src={Commiunty} />
                                 <p className='text'>Markets</p>
                             </div> */}
-                            <Dropdown
-                                menu={{ items }}
-                                placement='bottomLeft'
-                                trigger={['click']}
-                            >
-                                <div className={windowLoaction.includes("/profile") ? 'header-tab active-text' : "header-tab"}>
-                                    <img src={Profile} />
-                                    <p className='text'>Profile</p>
-                                </div>
-                            </Dropdown>
-                        </div>
-                    </Col>
+
+                                {!token ?
+                                    <div style={{ display: "flex", justifyContent: "end", height: "100%", alignItems: "center" }}>
+                                        <button onClick={() => {
+                                            localStorage.clear()
+                                            window.location.href = "/login"
+                                        }} className='register'>Register</button>
+                                    </div>
+
+                                    :
+                                    <Dropdown
+                                        menu={{ items }}
+                                        placement='bottomLeft'
+                                        trigger={['click']}
+                                    >
+                                        <div className={windowLoaction.includes("/profile") ? 'header-tab active-text' : "header-tab"}>
+                                            <img src={Profile} />
+                                            <p className='text'>Profile</p>
+                                        </div>
+                                    </Dropdown>
+                                }
+                            </div>
+                        </Col>
+                    }
                 </Row>
             </div>
         </div>

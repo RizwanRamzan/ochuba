@@ -1,14 +1,10 @@
-import { Modal } from 'antd'
-import React from 'react'
+import { Modal } from "antd";
+import React from "react";
 
-const LearnTrade = ({handleCancel,handleOk,isModalOpen}) => {
+const LearnTrade = ({ handleCancel, handleOk, isModalOpen }) => {
+  return (
+    <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}></Modal>
+  );
+};
 
-
-    return (
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            
-        </Modal>
-    )
-}
-
-export default LearnTrade
+export default LearnTrade;

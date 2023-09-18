@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import './portfolio.scss'
 import { Trading } from '../../assets'
 import { useNavigate } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 
 const Protfolio = () => {
 
@@ -14,18 +15,22 @@ const Protfolio = () => {
 
   const navigate = useNavigate()
 
+  const mobileResponsive = useMediaQuery({
+    query: '(max-width: 900px)'
+  })
+
   return (
     <div className='portfolio'>
       <Row className='portfolio-top' >
-        <Col span={8}>
+        <Col className='mobile-responsive' span={mobileResponsive ? 24 : 8}>
           <p className='heading'>{active == "close" ? "Total Payout" : "Current Value"}</p>
           <p className='value' >10</p>
         </Col>
-        <Col span={8}>
+        <Col className='mobile-responsive' span={mobileResponsive ? 24 : 8}>
           <p className='heading'>{active == "close" ? "Total investment" : "Open Orders Value"}</p>
           <p className='value' >10</p>
         </Col>
-        <Col span={8}>
+        <Col className='mobile-responsive' span={mobileResponsive ? 24 : 8}>
           <p className='heading'>Markets</p>
           <p className='value' >10</p>
         </Col>
@@ -43,7 +48,7 @@ const Protfolio = () => {
         </Col>
       </Row>
       <Row className='ready-to-trade'>
-        <Col span={16}>
+        <Col span={mobileResponsive ? 24 : 16}>
           <div className='left-side'>
             <img src={Trading} />
             <p>You are ready to trade. Start Now!</p>
@@ -53,7 +58,7 @@ const Protfolio = () => {
             </div>
           </div>
         </Col>
-        <Col style={{ height: "100%" }} span={8}>
+        <Col style={mobileResponsive ? { height: "auto" } : { height: "100%" }} span={mobileResponsive ? 24 : 8}>
           <div className='right-side'>
             <Empty />
           </div>

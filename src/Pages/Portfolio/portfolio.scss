@@ -12,6 +12,17 @@
         display: flex;
         align-items: center;
 
+
+        @media screen and (max-width:900px) {
+            margin-top: 20px;
+            .mobile-responsive {
+                display: flex;
+                justify-content: space-between;
+                padding: 0px 20px;
+            }
+        }
+
+
         .heading {
             text-align: center;
             color: gray;
@@ -19,6 +30,11 @@
             font-size: larger;
             margin-top: 5px;
             margin-bottom: 0px;
+
+            @media screen and (max-width:900px) {
+                text-align: start !important;
+            }
+
         }
 
         .value {
@@ -48,23 +64,25 @@
             cursor: pointer;
         }
 
-        .toggle-active{
+        .toggle-active {
             background-color: #0094dc;
             color: #fff;
             font-weight: 600;
         }
     }
 
-    .ready-to-trade{
+    .ready-to-trade {
         margin-top: 50px;
         height: 80vh;
         display: flex;
         align-items: center;
-        .left-side{
+
+        .left-side {
             display: flex;
             flex-direction: column;
             align-items: center;
-            .trade-start{
+
+            .trade-start {
                 display: flex;
                 align-items: center;
                 background-color: #F8F8F8;
@@ -73,7 +91,8 @@
                 padding: 0px 10px;
             }
         }
-        .right-side{
+
+        .right-side {
             border: 2px solid #F4F4F4;
             height: 100%;
             display: flex;

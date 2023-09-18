@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import RenderLineChart from '../lineChart'
 import './chats.scss'
 import { DefaultNumber } from '../../Pages/Wallet/constant'
+import { useMediaQuery } from 'react-responsive'
 
 const TradingScreen = () => {
 
@@ -10,6 +11,9 @@ const TradingScreen = () => {
     const [dollor, setDollor] = useState("")
     let [number, setNumber] = useState("")
     const [activeBtn, setActiveBtn] = useState("")
+    const [active, setActive] = useState("yes")
+    const [outcomeBtn, setOutcomeBtn] = useState("yes")
+    const [doller, setDoller] = useState(0)
 
     const [form] = Form.useForm()
 
@@ -17,57 +21,76 @@ const TradingScreen = () => {
         form?.setFieldValue({
             amout: number
         })
-    }, [number]) 
+    }, [number])
+
+    const mobileResponsive = useMediaQuery({
+        query: '(max-width: 900px)'
+    })
 
 
     return (
         <>
-            <Row className='wallet'>
-                <Col span={16}>
+            <Row style={mobileResponsive ? { marginTop: "20px" } : { marginTop: "50px" }} gutter={[20, 20]} className='wallet'>
+                <Col span={24}><p style={{ fontWeight: "600", fontSize: "20px" }} >Jaipur Indians to win against Jodhpur Sunrisers?</p></Col>
+                <Col span={24}>
+                    <div className='trading-cart'>
+                        <p className='right-text1'>Yes 35.76</p>
+                        <p className='right-text2'>No 35.76</p>
+                    </div>
+                </Col>
+                <Col span={24} className='trading-yeschart'>
+                    <button onClick={() => setActive("yes")} className={active == "yes" ? 'yes activeButton' : "yes"}>Yes Chart</button>
+                    <button onClick={() => setActive("about")} className={active == "about" ? 'about activeButton' : "about"}>About</button>
+                </Col>
+                <Col span={mobileResponsive ? 24 : 16}>
                     <RenderLineChart />
                 </Col>
-                <Col span={8}>
+
+                <Col span={mobileResponsive ? 24 : 8}>
                     <div className='wallet-right-side'>
-                        <div className='wellate-buttons'>
-                            <button onClick={() => setWithdrawal("deposit")} className={withdrawal == "deposit" ? 'activeButton deposit' : "deposit"}>Deposit</button>
-                            <button onClick={() => setWithdrawal("withdraw")} className={withdrawal == "withdraw" ? 'activeButton deposit' : "deposit"}>Withdraw</button>
+                        <p style={{fontSize:"16px",fontWeight:"700",borderBottom:"1px solid gray"}}>Buy</p>
+
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <p>Outcome</p>
+                            <div style={{ display: "flex", gap: 10 }}>
+                                <button onClick={() => setOutcomeBtn("yes")} className={outcomeBtn == "yes" ? 'outcome-yes active-outcome-yes' : 'outcome-yes'}>Yes</button>
+                                <button onClick={() => setOutcomeBtn("no")} className={outcomeBtn == "no" ? 'outcome-yes active-outcome-no' : 'outcome-yes'}>No</button>
+                            </div>
                         </div>
-                        <p className='credits' >Credits to be added (1$ ≈ 82.62 credits)</p>
+                        <p className='credits' >Credits to be added (niagara currency)</p>
                         <Form form={form}>
                             <Form.Item name="amout">
-                                <Input onChange={(e) => valueToDoller(e.target.value)} min={0} suffix={dollor && <p style={{ color: "#0093DD", margin: "0px", }}>= {(dollor)} USDT*</p>} className='ant-input-affix-wrapper' type='number' placeholder='Enter Amout' />
+                                <Input maxLength={6} onChange={(e) => setDoller(e.target.value)} min={0} className='ant-input-affix-wrapper' type='number' placeholder='Enter Amout' />
                             </Form.Item>
                         </Form>
-                        <div className='wellate-numbers'>
-                            {DefaultNumber?.map((item, index) =>
-                                <p onClick={() => {
-                                    setNumber(item?.number)
-                                }} className={number == item?.number ? 'wellate-default active-number' : "wellate-default"} key={index}>{item?.number}</p>
-                            )
-                            }
+                        <div>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>Available Blance : 10</p>
                         </div>
 
-
-                        <div className='selet-network'>
-                            <p>Select Network Type</p>
-                            <div className='selet-network-button'>
-                                {["BINANCE PAY", "TRC20", "ERC20"]?.map((item, index) =>
-                                    <button onClick={() => setActiveBtn(item)} className={activeBtn == item && "active-button"} key={index} >{item}</button>
-                                )}
-                            </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>Average Price</p>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>{doller || "0"}</p>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>Est. Shares</p>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>{doller * 10 / 100 || "0"}</p>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>Potential Returns</p>
+                            <p style={{ margin: "0px", color: "gray", fontSize: "14px" }}>{doller * 1.16 || "0.00"}<b style={{ color: "#0092DA" }}>(ROI : 1.16 X)</b></p>
                         </div>
 
                         <div className='text-area'>
-                            <p className='dec'>All your deposits will be processed in USDT only. Actual rates may vary during the time of transaction.</p>
-                            <p className='dec'>We support ERC20 & TRC20 networks. For details please <a>refer this .</a></p>
+                            <p className='dec'>Trading Fee: 10% of profit</p>
                         </div>
 
+
                         <div className='proceed'>
-                            <button>Proceed</button>
+                            <button className={outcomeBtn == "yes" && 'active-outcome-yes' || outcomeBtn == "no" && 'active-outcome-no  '}>Proceed</button>
                         </div>
                     </div>
                 </Col>
-            </Row>
+            </Row >
         </>
     )
 }

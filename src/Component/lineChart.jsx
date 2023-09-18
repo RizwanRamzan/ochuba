@@ -1,28 +1,31 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from 'recharts';
 
 const data = [
-  { name: '0', uv: 200, pv: 2400, amt: 2400 },
-  { name: '10', uv: 30, pv: 2400, amt: 2400 },
-  { name: '20', uv: 10, pv: 2400, amt: 2400 },
-  { name: '30', uv: 20, pv: 2400, amt: 2400 },
-  { name: '40', uv: 30, pv: 2400, amt: 2400 },
-  { name: '50', uv: 40, pv: 2400, amt: 2400 },
-  { name: '60', uv: 50, pv: 2400, amt: 2400 },
-  { name: '70', uv: 60, pv: 2400, amt: 2400 },
-  { name: '80', uv: 100, pv: 2400, amt: 2400 },
-  { name: '90', uv: 80, pv: 2400, amt: 2400 },
-  { name: '100', uv: 90, pv: 2400, amt: 2400 },
+  { name: '0', leftValue: 200, },
+  { name: '10', leftValue: 30, },
+  { name: '20', leftValue: 10, },
+  { name: '30', leftValue: 20, },
+  { name: '40', leftValue: 30, },
+  { name: '50', leftValue: 40, },
+  { name: '60', leftValue: 50, },
+  { name: '70', leftValue: 60, },
+  { name: '80', leftValue: 100, },
+  { name: '90', leftValue: 80, },
+  { name: '100', leftValue: 90, },
 
 ];
 
 const RenderLineChart = () => (
-  <LineChart width={800} height={300} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-    <Line type='natural' dataKey="uv" stroke="#8884d8" />
-    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-    <XAxis dataKey="name" />
-    <YAxis />
-    <Tooltip />
-  </LineChart>
+  <ResponsiveContainer width="100%" height={400}>
+    <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+      <Line type='bump' dataKey="leftValue" name="Left Value" stroke="#8884d8" />
+      <LabelList dataKey="leftValue" position="left" /> {/* Display labels on the left side */}
+      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+      <XAxis dataKey="name" />
+      <YAxis  hide={true} />
+      <Tooltip />
+    </LineChart>
+  </ResponsiveContainer>
 );
 
 export default RenderLineChart
