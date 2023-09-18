@@ -218,7 +218,7 @@ const Home = () => {
               >
                 <div className="card">
                   <p className="title-text">{item?.title}</p>
-                  <img src={item?.image} alt="item?.image" />
+                  <img src={baseUrl + "/uploads/" + item?.image} alt={item?.image} />
                 </div>
                 <div className="card-bottom">
                   {/* <div className='card-left'>
