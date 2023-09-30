@@ -4,6 +4,7 @@ import { Col, Divider, Dropdown, Row } from 'antd'
 import { Commiunty, Logo, Profile, Ranking } from '../../../assets'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const MobileHeader = () => {
 
@@ -14,6 +15,9 @@ const MobileHeader = () => {
     const navigate = useNavigate()
 
     const windowLoaction = window.location.pathname
+
+
+    const userDetails = useSelector((state)=>state?.gernalReducer?.completeUser)
 
 
     const token = localStorage.getItem("tradingToken")
@@ -39,8 +43,8 @@ const MobileHeader = () => {
         {
             key: '2',
             label: (
-                <a target="_blank" rel="noopener noreferrer">
-                    Join TeleGram
+                <a target='_blank' href='https://t.me/ochuba_markets'>
+                    Join Telegram
                 </a>
             ),
         },
@@ -73,7 +77,7 @@ const MobileHeader = () => {
                                 <p className='text'>Portfolio</p>
                             </div>
                             <div onClick={() => navigateRouteHandler("/wallet")} className={windowLoaction.includes("/wallet") ? 'header-tab active-text' : "header-tab"}>
-                                <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
+                                <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>{userDetails?.amount}</p>
                                 <p className='text'>Wallet</p>
                             </div>
                             {/* <div className='header-tab'>

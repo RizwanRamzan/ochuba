@@ -23,15 +23,16 @@ const gernalSlice = createSlice(
             setLoader: (state, action) => {
                 state.loader = action.payload;
             },
+            setUserDetails: (state, action) => {
+                state.completeUser = action.payload;
+            },
             setProviderDetails:(state,action)=>{
                 state.providerDetails = action.payload
             },
-            setCompleteDoctor:(state,action)=>{
-                state.completeUser = action.payload
-            }
+          
         },
     }
 );
 
-export const { setLoader , setProviderDetails,setCompleteDoctor} = gernalSlice.actions;
+export const { setLoader , setProviderDetails,setUserDetails} = gernalSlice.actions;
 export const gernalReducer = gernalSlice.reducer;

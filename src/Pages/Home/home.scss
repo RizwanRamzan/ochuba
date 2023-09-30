@@ -186,3 +186,28 @@
   display: flex !important;
   gap: 10px !important;
 }
+
+.card-s {
+  .ant-card-bordered {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    border-bottom: none !important;
+  }
+}
+
+.main-expire {
+  background-color: #e6eeff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+  height: 30px;
+
+  .expire {
+    margin: 0;
+    color: #0858fe;
+    align-items: center;
+  }
+}

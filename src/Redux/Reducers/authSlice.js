@@ -17,12 +17,14 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    // setCardDetails:(sate)
     logoutDoctor: (state, action) => {
       localStorage.clear()
       state.user = {};
       state.token = ''
       state.orderBbyId = {}
     },
+
 
   },
 

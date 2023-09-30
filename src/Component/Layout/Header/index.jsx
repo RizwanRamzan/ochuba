@@ -19,6 +19,8 @@ const Header = () => {
 
     const token = localStorage.getItem("tradingToken")
 
+    const userDetails = useSelector((state)=>state?.gernalReducer?.completeUser)
+
     const navigateRouteHandler = (path) => {
         if (token) {
             navigate(path)
@@ -41,8 +43,8 @@ const Header = () => {
         {
             key: '2',
             label: (
-                <a target="_blank" rel="noopener noreferrer">
-                    Join TeleGram
+                <a target='_blank' href='https://t.me/ochuba_markets'>
+                    Join Telegram
                 </a>
             ),
         },
@@ -90,7 +92,7 @@ const Header = () => {
                                     <p className='text'>Portfolio</p>
                                 </div>
                                 <div onClick={() => navigateRouteHandler("/wallet")} className={windowLoaction.includes("/wallet") ? 'header-tab active-text' : "header-tab"}>
-                                    <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
+                                    <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>{userDetails?.amount}</p>
                                     <p className='text'>Wallet</p>
                                 </div>
                                 {/* <div className='header-tab'>

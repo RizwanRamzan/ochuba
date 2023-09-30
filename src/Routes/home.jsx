@@ -16,7 +16,7 @@ const HomeAuthRoutes = () => {
             <Route path="/portfolio" element={<Protfolio />} />
             <Route path="/wallet" element={<Wallet />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/trading-chart" element={<TradingScreen />} />
+            <Route path="/trading-chart/:id" element={<TradingScreen />} />
         </Routes>
 
     )

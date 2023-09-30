@@ -9,6 +9,7 @@ import {
   Input,
   Modal,
   Row,
+  message,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./wallet.scss";
@@ -16,6 +17,9 @@ import { useNavigate } from "react-router-dom";
 import { DefaultNumber } from "./constant";
 import { useMediaQuery } from "react-responsive";
 import { image1, image2, image3, image4, image5 } from "../../assets";
+import Flutterwave from "../../Component/Payment/flutterwave";
+import { useSelector } from "react-redux";
+import { setUserDetails } from "../../Redux/Reducers/gernalSlice";
 
 const Wallet = () => {
   const [active, setActive] = useState("live");
@@ -25,11 +29,15 @@ const Wallet = () => {
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPayment, setIsPayment] = useState(false);
   const [withdrawal, setWithdrawal] = useState("deposit");
-  const [dollor, setDollor] = useState("");
-  let [number, setNumber] = useState("");
+  const [number, setNumber] = useState("");
   const [activeBtn, setActiveBtn] = useState("");
+  const [Amount, setAmount] = useState("");
 
+  const userDetails = useSelector(
+    (state) => state?.gernalReducer?.completeUser
+  );
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -46,25 +54,24 @@ const Wallet = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     form.resetFields();
-    setIsEditOpen(false);
+  };
+
+  const handleOkPayment = () => {
+    setIsModalOpen(false);
+    form.resetFields();
+    setIsPayment(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
     form.resetFields();
-    setIsEditOpen(false);
+    setIsPayment(false);
   };
-
-  const valueToDoller = (e) => {
-    setDollor((e /= 82.62).toFixed(2));
-  };
-
-  const navigate = useNavigate();
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    form?.setFieldValue({
+    form?.setFieldsValue({
       amout: number,
     });
   }, [number]);
@@ -73,14 +80,17 @@ const Wallet = () => {
     query: "(max-width: 900px)",
   });
 
+   
+
+
   return (
     <div className="wallet">
       <Row className="wallet-top">
         <Col className="mobileresponsive" span={mobileResponsive ? 24 : 6}>
-          <p className="heading">Deposit (1$ ≈ 82.62 credits)</p>
-          <p className="value">10</p>
-          <p className="heading" style={{ color: "#0093DD", fontSize: "14px" }}>
-            (Incl. 10.00 bonus amount)
+          <p className="heading">Deposit</p>
+          <p className="value">
+            <b> ₦  </b>
+            {userDetails?.amount}
           </p>
         </Col>
         <Col
@@ -88,14 +98,20 @@ const Wallet = () => {
           className="border-class mobileresponsive"
         >
           <p className="heading">Earnings</p>
-          <p className="value">0.00</p>
+          <p className="value">
+          <b> ₦  </b>
+            0.00
+            </p>
         </Col>
         <Col
           span={mobileResponsive ? 24 : 6}
           className="border-class mobileresponsive"
         >
           <p className="heading">Promo Cash</p>
-          <p className="value">0.00</p>
+          <p className="value">
+          <b> ₦  </b>
+            0.00
+            </p>
         </Col>
         <Col
           onClick={() => showModal()}
@@ -128,11 +144,7 @@ const Wallet = () => {
           </p>
         </Col>
       </Row>
-      <Row>
-        <Col span={24}>
-          <p className="passbook">My Transactions</p>
-        </Col>
-      </Row>
+
       <Row gutter={[20, 20]} className="ready-to-trade">
         <Col span={24}></Col>
         <Col span={mobileResponsive ? 24 : 17}>
@@ -169,22 +181,28 @@ const Wallet = () => {
                 width={"100%"}
                 src={image4}
               />
-                <img
+            </div>
+            <div style={{ width: "100%" }}>
+              <img
                 style={{ borderRadius: "10px" }}
                 width={"100%"}
                 src={image5}
               />
             </div>
           </Carousel>
+
+          <Col span={24}>
+            <p className="passbook">My Transactions</p>
+          </Col>
           <div className="left-side">
-            {[1, 2, 3].map((item, index) => (
+            {userDetails?.history?.map((item, index) => (
               <div onClick={() => showDrawer()} className="wellate-card">
                 <div className="wellate-card-inner">
                   <div className="wellate-left">
                     <p className="first-text">Signup Bonus Added</p>
                     <p className="second-text">Signup Bonus Added</p>
                   </div>
-                  <p className="right-text">+10</p>
+                  <p className="right-text">+{item}</p>
                 </div>
               </div>
             ))}
@@ -210,22 +228,16 @@ const Wallet = () => {
                 Withdraw
               </button>
             </div>
-            <p className="credits">Credits to be added (1$ ≈ 82.62 credits)</p>
+            <p className="credits">Credits to be added (niagara currency)</p>
             <Form form={form}>
               <Form.Item name="amout">
                 <Input
-                  onChange={(e) => valueToDoller(e.target.value)}
                   min={0}
-                  suffix={
-                    dollor && (
-                      <p style={{ color: "#0093DD", margin: "0px" }}>
-                        = {dollor} USDT*
-                      </p>
-                    )
-                  }
+                  max={100000}
                   className="ant-input-affix-wrapper"
                   type="number"
                   placeholder="Enter Amout"
+                  onChange={(e) => setAmount(e.target.value)}
                 />
               </Form.Item>
             </Form>
@@ -234,6 +246,7 @@ const Wallet = () => {
                 <p
                   onClick={() => {
                     setNumber(item?.number);
+                    setAmount(item?.number);
                   }}
                   className={
                     number == item?.number
@@ -250,7 +263,7 @@ const Wallet = () => {
             <div className="selet-network">
               <p>Select Network Type</p>
               <div className="selet-network-button">
-                {["BINANCE PAY", "TRC20", "ERC20"]?.map((item, index) => (
+                {["FLUTTERWAVE PAY", "CRYPTO PAY"]?.map((item, index) => (
                   <button
                     onClick={() => setActiveBtn(item)}
                     className={activeBtn == item && "active-button"}
@@ -262,7 +275,7 @@ const Wallet = () => {
               </div>
             </div>
 
-            <div className="text-area">
+            {/* <div className="text-area">
               <p className="dec">
                 All your deposits will be processed in USDT only. Actual rates
                 may vary during the time of transaction.
@@ -271,10 +284,18 @@ const Wallet = () => {
                 We support ERC20 & TRC20 networks. For details please{" "}
                 <a>refer this .</a>
               </p>
-            </div>
+            </div> */}
 
             <div className="proceed">
-              <button>Proceed</button>
+              <button
+                onClick={() => {
+                  Amount
+                    ? setIsPayment(true)
+                    : message.warning("please enter detosit amount");
+                }}
+              >
+                Proceed
+              </button>
             </div>
           </div>
         </Col>
@@ -355,6 +376,16 @@ const Wallet = () => {
             </p>
           </Col>
         </Row>
+      </Modal>
+
+      <Modal
+        footer={false}
+        open={isPayment}
+        onOk={handleOkPayment}
+        onCancel={handleCancel}
+        width={mobileResponsive ? "90%":"60%"}
+      >
+        <Flutterwave setIsPayment={setIsPayment} Amount={Amount} />
       </Modal>
 
       <Drawer

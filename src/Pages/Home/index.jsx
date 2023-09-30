@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./home.scss";
-import { Card, Carousel, Col, Dropdown, Empty, Row, Select } from "antd";
+import { Card, Carousel, Col, Dropdown, Empty, Row, Select, Spin } from "antd";
 import { CardData, Title } from "./constant";
 import { ReactSVG } from "react-svg";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
-import { Filter, image1, image2, image3, image4, image5 } from "../../assets";
+import {
+  Filter,
+  Timer,
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+} from "../../assets";
 import LearnTrade from "../../Component/LearnTrading";
 import { useSelector } from "react-redux";
 
@@ -17,6 +25,9 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [allData, setAllData] = useState([]);
   const [category, setCategory] = useState([]);
+  const [dateAndTime, setDateAndTime] = useState([]);
+  const [yesBids,setYesBids] = useState([])
+  const [noBids,setNoBids] = useState([])
 
   const token = useSelector((state) => state?.authReducer?.token);
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -64,32 +75,7 @@ const Home = () => {
     query: "(max-width: 900px)",
   });
 
-  const items = [
-    {
-      key: "1",
-      label: (
-        <a target="_blank" rel="noopener noreferrer">
-          Closing Soon
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a target="_blank" rel="noopener noreferrer">
-          New Market
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a target="_blank" rel="noopener noreferrer">
-          Total Volume
-        </a>
-      ),
-    },
-  ];
+
 
   const filterdata = (object) => {
     const filter = allData.filter(
@@ -106,6 +92,40 @@ const Home = () => {
     setData(filterCategory);
   };
 
+  const GetDate = (endDate, endTime,item) => {
+    // setYesBids(item?.bids?.filter((item)=> item?.bid == "yes"))
+    // setNoBids(item?.bids?.filter((item)=> item?.bid == "no"))
+    const inputDateString = endDate + "T" + endTime + "Z"; // Combine date and time strings
+    const inputDateTime = new Date(inputDateString);
+
+    const now = new Date(); // Current date and time
+    const timeDifference = inputDateTime - now; // Calculate the time difference in milliseconds
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    const hours = Math.floor(
+      (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    if (timeDifference < 0) {
+        return (
+            <div style={{background:"#FAE9F4"}} className="main-expire">
+              <p style={{color:"#CA2F93"}} className="expire">
+                Event Expire
+              </p>
+            </div>
+          );
+    }
+
+    return (
+      <div className="main-expire">
+          <img width={15} src={Timer} />
+        <p className="expire">
+          Event will expire in ({days} days {hours} hours)
+        </p>
+      </div>
+    );
+  };
+
   useEffect(() => {
     if (allData?.length) {
       const filtercategory = allData?.filter((item) => item?.type == "sports");
@@ -113,7 +133,46 @@ const Home = () => {
     }
   }, [allData?.length]);
 
+
+
+  const items = [
+    {
+      key: "1",
+      label: (
+        <a target="_blank" onClick={()=>{
+          setData(allData)
+          setTabs({ name: "Sports", index: 0 })
+          }} rel="noopener noreferrer">
+          Closing Soon
+        </a>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <a onClick={()=>{
+          setData(allData)
+          setTabs({ name: "Sports", index: 0 })
+          }} target="_blank" rel="noopener noreferrer">
+          New Market
+        </a>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <a onClick={()=>{
+          setData(allData)
+          setTabs({ name: "Sports", index: 0 })
+          }} target="_blank" rel="noopener noreferrer">
+          Total Volume
+        </a>
+      ),
+    },
+  ];
+
   return (
+    <Spin spinning={loading}>
     <div className="home">
       <div className="home-box">
         <Row gutter={[20, 20]}>
@@ -183,17 +242,6 @@ const Home = () => {
                 <img width={25} height="auto" src={Filter} />
               </div>
             </Dropdown>
-            {/* <Select suffixIcon={} className='ant-select-selector'>
-                            <Select.Option value="Closing Soon">
-                                Closing Soon
-                            </Select.Option>
-                            <Select.Option value="New Market">
-                                New Market
-                            </Select.Option>
-                            <Select.Option value="Total Volums">
-                                Total Volums
-                            </Select.Option>
-                        </Select> */}
           </Col>
 
           <Col
@@ -201,7 +249,7 @@ const Home = () => {
             span={mobileResponsive ? 20 : 22}
           >
             <div className="title-tabs">
-              {Title?.map((item, index) => (
+              {Title?.length >0 && Title?.map((item, index) => (
                 <div
                   onClick={() => {
                     filterdata(item);
@@ -223,7 +271,7 @@ const Home = () => {
         <Row style={{ marginTop: "20px" }}>
           <Col span={24}>
             <div className="title-tabs">
-              {category?.length &&
+              {category?.length >0 &&
                 category.map((item, index) => (
                   <div
                     onClick={() => {
@@ -241,12 +289,12 @@ const Home = () => {
         </Row>
 
         <Row style={{ marginTop: "50px" }} gutter={[20, 20]}>
-          {data?.length ? (
+          {data?.length && (
             data?.map((item) => (
-              <Col span={mobileResponsive ? 24 : 8}>
+              <Col className="card-s" span={mobileResponsive ? 24 : 8}>
                 <Card
-                  onClick={() => navigate("/trading-chart")}
-                  style={{ cursor: "pointer", borderColor: "gray" }}
+                  onClick={() => navigate(`/trading-chart/${item?._id}`)}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="card">
                     <p className="title-text">{item?.title}</p>
@@ -256,13 +304,14 @@ const Home = () => {
                     />
                   </div>
                   <div className="card-bottom">
-                    <p className="right-text1">Yes {item?.yes}</p>
-                    <p className="right-text2">No {item?.no}</p>
+                    <p className="right-text1">Yes {item?.bids?.filter((item)=> item?.bid == "yes")[item?.bids?.filter((item)=> item?.bid == "yes")?.length-1]?.amount || "0.00"}</p>
+                    <p className="right-text2">No {item?.bids?.filter((item)=> item?.bid == "no")[item?.bids?.filter((item)=> item?.bid == "no")?.length-1]?.amount || "0.00"}</p>
                   </div>
                 </Card>
+                {GetDate(item?.endDate, item?.endTime,item)}
               </Col>
             ))
-          ) : (
+          ) || (
             <Col
               span={24}
               style={{ display: "flex", justifyContent: "center" }}
@@ -281,6 +330,7 @@ const Home = () => {
         handleCancel={handleCancel}
       />
     </div>
+    </Spin>
   );
 };
 

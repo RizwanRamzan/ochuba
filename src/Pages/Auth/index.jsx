@@ -43,7 +43,10 @@ const Login = () => {
             setSignUp("login");
             form.resetFields();
           }
-        });
+        })
+        .catch(error => {
+          setLoading(false);
+        })
     }
 
     if (signUp == "login") {
@@ -73,7 +76,10 @@ const Login = () => {
             window.location.href = "/market";
             setSignUp("login");
           }
-        });
+        }).catch(error => {
+          setLoading(false);
+          message.error("Username or password invalid")
+        })
     }
   };
 
