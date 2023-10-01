@@ -5,6 +5,8 @@ import React from 'react';
 
 const RenderLineChart = ({chartData,type}) => {
 
+  console.log(chartData,"chartDatachartDatachartDatachartData")
+
   const axisStyle = {
     fill: "#99A69D",
     fontSize: "14px",
