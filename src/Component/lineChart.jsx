@@ -17,7 +17,7 @@ const RenderLineChart = ({chartData,type}) => {
 
   <ResponsiveContainer width="100%" height={400}>
     <LineChart data={chartData} margin={{ top: 5, right: 30, bottom: 5, left: 0 }}>
-      <Line type='bump' dataKey="amount" name={type?"No ":"Yes"} stroke={type?"#D762AE": "#8884d8"} />
+      <Line type='bump' dataKey="bidamount" name={type?"No ":"Yes"} stroke={type?"#D762AE": "#8884d8"} />
       <LabelList  position="left" /> {/* Display labels on the left side */}
       <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
       <XAxis  hide={true} />

@@ -54,9 +54,8 @@ const TradingScreen = () => {
       bid: outcomeBtn,
       bidamount: doller,
       amount:outcomeBtn == "yes"
-      ? chartData[chartData?.length - 1]?.amount
-      : noBids[noBids?.length - 1]?.amount,
-
+      ? chartData[chartData?.length - 1]?.bidamount
+      : noBids[noBids?.length - 1]?.bidamount,
     };
 
     if (doller) {
@@ -119,7 +118,7 @@ const TradingScreen = () => {
         setNoBids(userData?.data?.bids?.filter((item) => item?.bid == "no"));
         for (let i = 0; i < userData?.data?.bids?.length; i++) {
           setTotalAmount(
-            (pre) => pre + parseInt(userData?.data?.bids[i]?.amount)
+            (pre) => pre + parseInt(userData?.data?.bids[i]?.bidamount)
           );
         }
       })
@@ -138,13 +137,11 @@ const TradingScreen = () => {
 
     const userBidId= completeUserDetails?._id == bidId?.id || ""
 
-
-
     const formData = {
       amount:
         outcomeBtn == "yes"
-          ? chartData[chartData?.length - 1]?.amount
-          : noBids[noBids?.length - 1]?.amount,
+          ? chartData[chartData?.length - 1]?.bidamount
+          : noBids[noBids?.length - 1]?.bidamount,
       bidamount: sellAmount,
       bid: outcomeBtn,
     };
@@ -207,10 +204,10 @@ const TradingScreen = () => {
         <Col span={24}>
           <div className="trading-cart">
             <p className="right-text1">
-              Yes {chartData[chartData?.length - 1]?.amount || 0.0}
+              Yes {chartData[chartData?.length - 1]?.bidamount || 0.0}
             </p>
             <p className="right-text2">
-              No {noBids[noBids?.length - 1]?.amount || 0.0}
+              No {noBids[noBids?.length - 1]?.bidamount || 0.0}
             </p>
           </div>
         </Col>
@@ -373,7 +370,7 @@ const TradingScreen = () => {
                     <p
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
-                      Available Blance : {userDetails?.amount}
+                      Available Blance : {userDetails?.bidamount}
                     </p>
                   </div>
 
@@ -389,8 +386,8 @@ const TradingScreen = () => {
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
                       {outcomeBtn == "yes" &&
-                        chartData[chartData?.length - 1]?.amount}
-                      {outcomeBtn == "no" && noBids[noBids?.length - 1]?.amount}
+                        chartData[chartData?.length - 1]?.bidamount}
+                      {outcomeBtn == "no" && noBids[noBids?.length - 1]?.bidamount}
                     </p>
                   </div>
                   <div
@@ -406,10 +403,10 @@ const TradingScreen = () => {
                     >
                       {outcomeBtn == "yes" &&
                         (
-                          doller / chartData[chartData?.length - 1]?.amount
+                          doller / chartData[chartData?.length - 1]?.bidamount
                         ).toFixed(2)}
                       {outcomeBtn == "no" &&
-                        (doller / noBids[noBids?.length - 1]?.amount).toFixed(
+                        (doller / noBids[noBids?.length - 1]?.bidamount).toFixed(
                           2
                         )}
                     </p>
@@ -434,7 +431,7 @@ const TradingScreen = () => {
                     <p className="dec">Trading Fee: 10% of profit</p>
                   </div>
 
-                  {userDetails?.amount < doller ? (
+                  {userDetails?.bidamount < doller ? (
                     <div className="proceed">
                       <button
                         disabled={!doller}
@@ -447,7 +444,7 @@ const TradingScreen = () => {
                           (outcomeBtn == "no" && "active-outcome-no  ")
                         }
                       >
-                        Add {doller - userDetails?.amount}
+                        Add {doller - userDetails?.bidamount}
                       </button>
                     </div>
                   ) : (
@@ -497,8 +494,8 @@ const TradingScreen = () => {
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
                       {outcomeBtn == "yes" &&
-                        chartData[chartData?.length - 1]?.amount}
-                      {outcomeBtn == "no" && noBids[noBids?.length - 1]?.amount}
+                        chartData[chartData?.length - 1]?.bidamount}
+                      {outcomeBtn == "no" && noBids[noBids?.length - 1]?.bidamount}
                     </p>
                   </div>
                   <div
@@ -507,15 +504,15 @@ const TradingScreen = () => {
                     <p
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
-                      Est. Shares
+                      Potential Returns
                     </p>
                     <p
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
                       {outcomeBtn == "yes" &&
-                        chartData[chartData?.length - 1]?.amount * sellAmount}
+                        chartData[chartData?.length - 1]?.bidamount * sellAmount}
                       {outcomeBtn == "no" &&
-                        noBids[noBids?.length - 1]?.amount * sellAmount}
+                        noBids[noBids?.length - 1]?.bidamount * sellAmount}
                     </p>
                   </div>
 
@@ -523,7 +520,7 @@ const TradingScreen = () => {
                     <p className="dec">Trading Fee: 10% of profit</p>
                   </div>
 
-                  {userDetails?.amount < doller ? (
+                  {userDetails?.bidamount < doller ? (
                     <div className="proceed">
                       <button
                         disabled={!doller}
@@ -536,7 +533,7 @@ const TradingScreen = () => {
                           (outcomeBtn == "no" && "active-outcome-no  ")
                         }
                       >
-                        Add {doller - userDetails?.amount}
+                        Add {doller - userDetails?.bidamount}
                       </button>
                     </div>
                   ) : (

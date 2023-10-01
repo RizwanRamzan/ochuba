@@ -304,8 +304,8 @@ const Home = () => {
                     />
                   </div>
                   <div className="card-bottom">
-                    <p className="right-text1">Yes {item?.bids?.filter((item)=> item?.bid == "yes")[item?.bids?.filter((item)=> item?.bid == "yes")?.length-1]?.amount || "0.00"}</p>
-                    <p className="right-text2">No {item?.bids?.filter((item)=> item?.bid == "no")[item?.bids?.filter((item)=> item?.bid == "no")?.length-1]?.amount || "0.00"}</p>
+                    <p className="right-text1">Yes {item?.bids?.filter((item)=> item?.bid == "yes")[item?.bids?.filter((item)=> item?.bid == "yes")?.length-1]?.bidamount || "0.00"}</p>
+                    <p className="right-text2">No {item?.bids?.filter((item)=> item?.bid == "no")[item?.bids?.filter((item)=> item?.bid == "no")?.length-1]?.bidamount || "0.00"}</p>
                   </div>
                 </Card>
                 {GetDate(item?.endDate, item?.endTime,item)}
