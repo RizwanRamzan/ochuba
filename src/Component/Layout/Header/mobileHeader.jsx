@@ -73,7 +73,7 @@ const MobileHeader = () => {
                                 <p className='text'>Markets</p>
                             </div>
                             <div onClick={() => navigateRouteHandler("/portfolio")} className={windowLoaction.includes("/portfolio") ? 'header-tab active-text' : "header-tab"}>
-                                <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>0</p>
+                                <p className='text' style={{ fontSize: "20px", color: "#0093DD" }}>{userDetails?.bids?.length}</p>
                                 <p className='text'>Portfolio</p>
                             </div>
                             <div onClick={() => navigateRouteHandler("/wallet")} className={windowLoaction.includes("/wallet") ? 'header-tab active-text' : "header-tab"}>
