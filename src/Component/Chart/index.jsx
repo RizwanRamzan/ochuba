@@ -2,7 +2,6 @@ import { Card, Col, Form, Input, Row, Spin, message } from "antd";
 import React, { useEffect, useState } from "react";
 import RenderLineChart from "../lineChart";
 import "./chats.scss";
-import { DefaultNumber } from "../../Pages/Wallet/constant";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -138,7 +137,8 @@ const TradingScreen = () => {
     const userBidId= completeUserDetails?._id == bidId?.id || ""
 
     const formData = {
-      amount:
+      share:sellAmount,
+      latestamount:
         outcomeBtn == "yes"
           ? chartData[chartData?.length - 1]?.bidamount
           : noBids[noBids?.length - 1]?.bidamount,
@@ -370,7 +370,7 @@ const TradingScreen = () => {
                     <p
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
-                      Available Blance : {userDetails?.bidamount}
+                      Available Blance : {userDetails?.amount}
                     </p>
                   </div>
 
@@ -431,10 +431,9 @@ const TradingScreen = () => {
                     <p className="dec">Trading Fee: 10% of profit</p>
                   </div>
 
-                  {userDetails?.bidamount < doller ? (
+                  {userDetails?.amount < doller ? (
                     <div className="proceed">
                       <button
-                        disabled={!doller}
                         onClick={() => {
                           message.warning("Please Recharge your account");
                           navigate("/wallet");
@@ -444,7 +443,7 @@ const TradingScreen = () => {
                           (outcomeBtn == "no" && "active-outcome-no  ")
                         }
                       >
-                        Add {doller - userDetails?.bidamount}
+                        Add {doller - userDetails?.amount}
                       </button>
                     </div>
                   ) : (
@@ -477,6 +476,7 @@ const TradingScreen = () => {
                     <Input
                       onChange={(e) => setsellAmount(e.target.value)}
                       min={0}
+                      
                       className="ant-input-affix-wrapper"
                       type="number"
                       placeholder="Enter Amout"
@@ -520,7 +520,7 @@ const TradingScreen = () => {
                     <p className="dec">Trading Fee: 10% of profit</p>
                   </div>
 
-                  {userDetails?.bidamount < doller ? (
+                  {userDetails?.amount < doller ? (
                     <div className="proceed">
                       <button
                         disabled={!doller}
@@ -533,7 +533,7 @@ const TradingScreen = () => {
                           (outcomeBtn == "no" && "active-outcome-no  ")
                         }
                       >
-                        Add {doller - userDetails?.bidamount}
+                        Add {doller - userDetails?.amount}
                       </button>
                     </div>
                   ) : (
