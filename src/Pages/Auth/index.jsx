@@ -101,7 +101,7 @@ const Login = () => {
     <Row style={{ height: "100vh" }}>
       {!mobileResponsive && (
         <Col span={12}>
-          <img src={TradingHome} width="100%" height="100%" />
+          <img style={{cursor:"pointer"}} src={TradingHome} width="100%" height="100%" />
         </Col>
       )}
       <Col span={mobileResponsive ? 24 : 12}>
@@ -115,6 +115,7 @@ const Login = () => {
                       <img
                         onClick={() => navigate("/market")}
                         src={Logo}
+                        style={{cursor:"pointer"}}
                         width="150px"
                         alt=""
                       />
@@ -169,6 +170,7 @@ const Login = () => {
                       <img
                         onClick={() => navigate("/market")}
                         src={Logo}
+                        style={{cursor:"pointer"}}
                         width="150px"
                         alt=""
                       />

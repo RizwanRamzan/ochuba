@@ -8,10 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../Redux/Reducers/gernalSlice";
 
 const TradingScreen = () => {
-  const [withdrawal, setWithdrawal] = useState("deposit");
   const [sellAmount, setsellAmount] = useState("");
   let [number, setNumber] = useState("");
-  const [activeBtn, setActiveBtn] = useState("");
   const [active, setActive] = useState("yes");
   const [buyOrSell, setBuyOrSell] = useState("buy");
   const [outcomeBtn, setOutcomeBtn] = useState("yes");
@@ -22,7 +20,7 @@ const TradingScreen = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [completeUserDetails, setCompleteUserDetails] = useState({});
 
-  console.log(completeUserDetails, "completeUserDetailscompleteUserDetails");
+  const [selectedtradingShare, setSelectedtradingShare] = useState([]);
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -32,6 +30,10 @@ const TradingScreen = () => {
   const token = useSelector((state) => state?.authReducer?.token);
   const userDetails = useSelector(
     (state) => state?.gernalReducer?.completeUser
+  );
+  console.log(
+    selectedtradingShare,
+    "selectedtradingShareselectedtradingShare "
   );
 
   const [form] = Form.useForm();
@@ -52,9 +54,10 @@ const TradingScreen = () => {
     const formData = {
       bid: outcomeBtn,
       bidamount: doller,
-      amount:outcomeBtn == "yes"
-      ? chartData[chartData?.length - 1]?.bidamount
-      : noBids[noBids?.length - 1]?.bidamount,
+      amount:
+        outcomeBtn == "yes"
+          ? chartData[chartData?.length - 1]?.bidamount
+          : noBids[noBids?.length - 1]?.bidamount,
     };
 
     if (doller) {
@@ -96,7 +99,7 @@ const TradingScreen = () => {
           setLoading(false);
         });
     } else {
-      message.warning("Please enter amonut");
+      message.warning("Please enter valid amonut");
     }
   };
 
@@ -114,6 +117,8 @@ const TradingScreen = () => {
         setChartData(
           userData?.data?.bids?.filter((item) => item?.bid == "yes")
         );
+        // setSelectedtradingShare(userDetails?.length ? userDetails?.bids?.filter((item)=> item))
+
         setNoBids(userData?.data?.bids?.filter((item) => item?.bid == "no"));
         for (let i = 0; i < userData?.data?.bids?.length; i++) {
           setTotalAmount(
@@ -130,23 +135,31 @@ const TradingScreen = () => {
     getAllBids();
   }, [bidId?.id]);
 
+  useEffect(() => {
+    for (let i = 0; i < userDetails?.bids?.length; i++) {
+      if (bidId?.id == userDetails?.bids[i]?.tradingId) {
+        setSelectedtradingShare(userDetails?.bids[i]);
+      }
+    }
+  }, [userDetails]);
+
   // Sell Amount
 
   const formSellHandler = async () => {
-
-    const userBidId= completeUserDetails?._id == bidId?.id || ""
-
     const formData = {
-      share:sellAmount,
+      share: sellAmount,
       latestamount:
         outcomeBtn == "yes"
           ? chartData[chartData?.length - 1]?.bidamount
           : noBids[noBids?.length - 1]?.bidamount,
-      bidamount: sellAmount,
+      oldamount: selectedtradingShare?.oldamount,
       bid: outcomeBtn,
     };
 
-    if (sellAmount) {
+    if (
+      selectedtradingShare?.share > 0 &&
+      sellAmount <= selectedtradingShare?.share
+    ) {
       setLoading(true);
 
       fetch(`${baseUrl}/api/v1/admin/trading/sell/${bidId?.id}`, {
@@ -185,7 +198,7 @@ const TradingScreen = () => {
           setLoading(false);
         });
     } else {
-      message.warning("Please enter amonut");
+      message.warning("Please enter valid share");
     }
   };
 
@@ -343,7 +356,9 @@ const TradingScreen = () => {
                 </button>
               </div>
             </div>
-            <p className="credits">Credits to be added (niagara currency)</p>
+            <p className="credits">
+              Credits to be added (<b> ₦ </b>)
+            </p>
 
             <Form layout="vertical" form={form}>
               {buyOrSell == "buy" ? (
@@ -363,7 +378,7 @@ const TradingScreen = () => {
                       min={0}
                       className="ant-input-affix-wrapper"
                       type="number"
-                      placeholder="Enter Amout"
+                      placeholder="Enter Amout ₦"
                     />
                   </Form.Item>
                   <div>
@@ -387,7 +402,8 @@ const TradingScreen = () => {
                     >
                       {outcomeBtn == "yes" &&
                         chartData[chartData?.length - 1]?.bidamount}
-                      {outcomeBtn == "no" && noBids[noBids?.length - 1]?.bidamount}
+                      {outcomeBtn == "no" &&
+                        noBids[noBids?.length - 1]?.bidamount}
                     </p>
                   </div>
                   <div
@@ -406,9 +422,9 @@ const TradingScreen = () => {
                           doller / chartData[chartData?.length - 1]?.bidamount
                         ).toFixed(2)}
                       {outcomeBtn == "no" &&
-                        (doller / noBids[noBids?.length - 1]?.bidamount).toFixed(
-                          2
-                        )}
+                        (
+                          doller / noBids[noBids?.length - 1]?.bidamount
+                        ).toFixed(2)}
                     </p>
                   </div>
                   <div
@@ -433,31 +449,56 @@ const TradingScreen = () => {
 
                   {userDetails?.amount < doller ? (
                     <div className="proceed">
-                      <button
-                        onClick={() => {
-                          message.warning("Please Recharge your account");
-                          navigate("/wallet");
-                        }}
-                        className={
-                          (outcomeBtn == "yes" && "active-outcome-yes") ||
-                          (outcomeBtn == "no" && "active-outcome-no  ")
-                        }
-                      >
-                        Add {doller - userDetails?.amount}
-                      </button>
+                      {token ? (
+                        <button
+                          onClick={() => {
+                            message.warning("Please Recharge your account");
+                            navigate("/wallet");
+                          }}
+                          className={
+                            (outcomeBtn == "yes" && "active-outcome-yes") ||
+                            (outcomeBtn == "no" && "active-outcome-no  ")
+                          }
+                        >
+                          `Add ${doller - userDetails?.amount}`
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => navigate("/login")}
+                          className={
+                            (outcomeBtn == "yes" && "active-outcome-yes") ||
+                            (outcomeBtn == "no" && "active-outcome-no  ")
+                          }
+                        >
+                          Sign up to Ochuba
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <div className="proceed">
-                      <button
-                        disabled={!doller}
-                        onClick={() => formHandler()}
-                        className={
-                          (outcomeBtn == "yes" && "active-outcome-yes") ||
-                          (outcomeBtn == "no" && "active-outcome-no  ")
-                        }
-                      >
-                        Proceed
-                      </button>
+                      {token ? (
+                        <button
+                          disabled={!doller}
+                          onClick={() => formHandler()}
+                          className={
+                            (outcomeBtn == "yes" && "active-outcome-yes") ||
+                            (outcomeBtn == "no" && "active-outcome-no  ")
+                          }
+                        >
+                          {" "}
+                          Proceed
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => navigate("/login")}
+                          className={
+                            (outcomeBtn == "yes" && "active-outcome-yes") ||
+                            (outcomeBtn == "no" && "active-outcome-no  ")
+                          }
+                        >
+                          Sign up to Ochuba
+                        </button>
+                      )}
                     </div>
                   )}
                 </>
@@ -469,19 +510,33 @@ const TradingScreen = () => {
                     rules={[
                       {
                         required: true,
-                        message: "please enter your amount",
+                        message: "please enter your share",
                       },
                     ]}
                   >
                     <Input
                       onChange={(e) => setsellAmount(e.target.value)}
                       min={0}
-                      
                       className="ant-input-affix-wrapper"
                       type="number"
                       placeholder="Enter Amout"
                     />
                   </Form.Item>
+
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <p
+                      style={{ margin: "0px", color: "gray", fontSize: "14px" }}
+                    >
+                      Available Shares
+                    </p>
+                    <p
+                      style={{ margin: "0px", color: "gray", fontSize: "14px" }}
+                    >
+                      {selectedtradingShare?.share || "0"}
+                    </p>
+                  </div>
                   <div
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
@@ -495,7 +550,8 @@ const TradingScreen = () => {
                     >
                       {outcomeBtn == "yes" &&
                         chartData[chartData?.length - 1]?.bidamount}
-                      {outcomeBtn == "no" && noBids[noBids?.length - 1]?.bidamount}
+                      {outcomeBtn == "no" &&
+                        noBids[noBids?.length - 1]?.bidamount}
                     </p>
                   </div>
                   <div
@@ -510,7 +566,8 @@ const TradingScreen = () => {
                       style={{ margin: "0px", color: "gray", fontSize: "14px" }}
                     >
                       {outcomeBtn == "yes" &&
-                        chartData[chartData?.length - 1]?.bidamount * sellAmount}
+                        chartData[chartData?.length - 1]?.bidamount *
+                          sellAmount}
                       {outcomeBtn == "no" &&
                         noBids[noBids?.length - 1]?.bidamount * sellAmount}
                     </p>
@@ -520,24 +577,8 @@ const TradingScreen = () => {
                     <p className="dec">Trading Fee: 10% of profit</p>
                   </div>
 
-                  {userDetails?.amount < doller ? (
-                    <div className="proceed">
-                      <button
-                        disabled={!doller}
-                        onClick={() => {
-                          message.warning("Please Recharge your account");
-                          navigate("/wallet");
-                        }}
-                        className={
-                          (outcomeBtn == "yes" && "active-outcome-yes") ||
-                          (outcomeBtn == "no" && "active-outcome-no  ")
-                        }
-                      >
-                        Add {doller - userDetails?.amount}
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="proceed">
+                  <div className="proceed">
+                    {token ? (
                       <button
                         disabled={!sellAmount}
                         onClick={() => formSellHandler()}
@@ -548,8 +589,18 @@ const TradingScreen = () => {
                       >
                         Proceed
                       </button>
-                    </div>
-                  )}
+                    ) : (
+                      <button
+                        onClick={() => navigate("/login")}
+                        className={
+                          (outcomeBtn == "yes" && "active-outcome-yes") ||
+                          (outcomeBtn == "no" && "active-outcome-no  ")
+                        }
+                      >
+                        Sign up to Ochuba
+                      </button>
+                    )}
+                  </div>
                 </>
               )}
             </Form>
