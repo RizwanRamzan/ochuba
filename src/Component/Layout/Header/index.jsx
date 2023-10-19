@@ -48,7 +48,7 @@ const Header = () => {
         <a
           onClick={() => {
             localStorage.clear();
-            window.location.href = "/login";
+            window.location.href = "/";
           }}
         >
           Logout

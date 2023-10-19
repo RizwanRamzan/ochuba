@@ -53,7 +53,7 @@ const MobileHeader = () => {
             label: (
                 <a onClick={() => {
                     localStorage.clear()
-                    window.location.href = "/login"
+                    window.location.href = "/"
                 }}>
                     Logout
                 </a>
@@ -87,7 +87,7 @@ const MobileHeader = () => {
                             {token &&
                             <Dropdown
                                 menu={{ items }}
-                                placement='bottomLeft'
+                                placement='top'
                                 trigger={['click']}
                             >
                                 <div className={windowLoaction.includes("/profile") ? 'header-tab active-text' : "header-tab"}>

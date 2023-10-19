@@ -7,4 +7,7 @@ export default defineConfig({
   define: {
     'import.meta.env.VITE_BASE_URL': JSON.stringify('http://localhost:5000'),
   },
+  esbuild: {
+    jsxFactory: 'h', // Specify your JSX factory, if needed
+  },
 })
